@@ -1,4 +1,4 @@
-# Проектная работа by yandex-practicum Место на React.js
+# Авторизация проекта Место на React.js
 
 Цель: перенести проект с vanilla JS на библиотеку React используя в написании кода функциональные компоненты и хуки. 
 [Демо проекта](https://konstabartosh.github.io/mesto-react/). 
