@@ -1,7 +1,7 @@
 .signup {
 	margin: 0 auto;
-	padding-top: 60px;
-	background-color: black;
+	padding-top: 55px;
+	background-color: inherit;
 	max-width: 358px;
 	display: flex;
 	flex-direction: column;

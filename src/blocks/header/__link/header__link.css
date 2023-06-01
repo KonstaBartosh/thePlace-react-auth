@@ -5,3 +5,7 @@
 	line-height: 22px;
 	cursor: pointer;
 }
+
+.header__link:hover {
+	opacity: 0.6;
+}

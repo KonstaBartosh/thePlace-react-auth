@@ -5,11 +5,15 @@
 	line-height: 22px;
 	text-align: center;
 	min-height: 50px;
-	margin-top: 216px;
+	margin-top: 200px;
 	border: 0;
 	background-color: white;
 	color: black;
 	cursor: pointer;
 	border-radius: 2px;
 	width: 100%;
+}
+
+.signup__button:hover {
+	opacity: 0.8;
 }

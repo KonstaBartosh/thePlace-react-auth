@@ -12,6 +12,7 @@ import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import Login from "./Login.js";
+import Register from "./Register.js";
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -115,10 +116,9 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
 				<Routes>
-					<Route path="/login" element={<Login />} />
-					<Route 
-						path="/main" 
-						element={
+					<Route path="/sign-up" element={<Register />}/>
+					<Route path="/sign-in" element={<Login />} />
+					<Route path="/main" element={
 							<Main
 							onEditAvatar={handleEditAvatarClick}
 							onEditProfile={handleEditProfileClick}
@@ -127,50 +127,35 @@ function App() {
 							onCardLike={handleCardLike}
 							onCardDelete={handleCardDelete}
 							cards={cards}
-						/>
-						} />
+						/>} 
+					/>
 				</Routes>
-				{/* <Main
-					onEditAvatar={handleEditAvatarClick}
-					onEditProfile={handleEditProfileClick}
-					onAddPlace={handleAddPlaceClick}
-					onCardClick={handleCardClick}
-					onCardLike={handleCardLike}
-					onCardDelete={handleCardDelete}
-					cards={cards}
-				/> */}
 				<Footer />
-
 				<EditAvatarPopup
 					isOpen={isEditAvatarPopupOpen}
 					onClose={closeAllPopups}
 					onUpdateAvatar={handleUpdateAvatar}
 				/>
-
 				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
 					onUpdateUser={handleUpdateUser}
 				/>
-
 				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
 					onAddPlace={handleAddPlaceSubmit}
 				/>
-
 				{/* <PopupWithForm
 					name="delete-card"
 					title="Вы уверены?">
 					<p className="popup__title">Вы уверены?</p>
 				</PopupWithForm> */}
-
 				<ImagePopup
 					card={selectedCard}
 					isOpen={isImagePopupOpen}
 					onClose={closeAllPopups}>
 				</ImagePopup>
-
 			</CurrentUserContext.Provider>
 		</div>
 	)
