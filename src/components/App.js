@@ -13,6 +13,7 @@ import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
+import ProtectedRoute from "./ProtectedRoute.js";
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -22,7 +23,7 @@ function App() {
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState({});
-	
+
 	const [loggedIn, setLoggedIn] = useState(false);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
@@ -118,10 +119,24 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
 				<Routes>
-					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" /> } />
-					<Route path="/sign-up" element={<Register />}/>
+					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" />} />
+					<Route path="/sign-up" element={<Register />} />
 					<Route path="/sign-in" element={<Login />} />
 					<Route path="/main" element={
+							<ProtectedRoute
+								element={Main}
+								loggedIn={loggedIn}
+								onEditAvatar={handleEditAvatarClick}
+								onEditProfile={handleEditProfileClick}
+								onAddPlace={handleAddPlaceClick}
+								onCardClick={handleCardClick}
+								onCardLike={handleCardLike}
+								onCardDelete={handleCardDelete}
+								cards={cards}
+							/>
+						}
+					/>
+					{/* <Route path="/main" element={
 							<Main
 							onEditAvatar={handleEditAvatarClick}
 							onEditProfile={handleEditProfileClick}
@@ -131,7 +146,7 @@ function App() {
 							onCardDelete={handleCardDelete}
 							cards={cards}
 						/>} 
-					/>
+					/> */}
 				</Routes>
 				<Footer />
 				<EditAvatarPopup
