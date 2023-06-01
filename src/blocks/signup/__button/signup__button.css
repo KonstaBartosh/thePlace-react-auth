@@ -1,0 +1,15 @@
+.signup__button {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 22px;
+	text-align: center;
+	min-height: 50px;
+	margin-top: 216px;
+	border: 0;
+	background-color: white;
+	color: black;
+	cursor: pointer;
+	border-radius: 2px;
+	width: 100%;
+}

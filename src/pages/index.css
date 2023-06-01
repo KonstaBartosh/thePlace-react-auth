@@ -57,3 +57,10 @@
 @import url(../blocks/form/__error-message/form__error-message.css);
 @import url(../blocks/form/__error-sign/form__error-sign.css);
 @import url(../blocks/form/__error-message/_active/form__error-message_active.css);
+
+/* login */
+@import url(../blocks/signup/signup.css);
+@import url(../blocks/signup/__title/signup__title.css);
+@import url(../blocks/signup/__form/signup__form.css);
+@import url(../blocks/signup/__input/signup__input.css);
+@import url(../blocks/signup/__button/signup__button.css);

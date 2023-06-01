@@ -1,0 +1,7 @@
+.signup__form {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 358px;
+	padding: 50px 0 0;
+}

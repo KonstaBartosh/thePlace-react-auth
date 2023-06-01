@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Routes, Route } from 'react-router-dom';
 
 import Header from "./Header.js";
 import Main from "./Main.js";
@@ -10,6 +11,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
+import Login from "./Login.js";
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -112,7 +114,23 @@ function App() {
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
-				<Main
+				<Routes>
+					<Route path="/login" element={<Login />} />
+					<Route 
+						path="/main" 
+						element={
+							<Main
+							onEditAvatar={handleEditAvatarClick}
+							onEditProfile={handleEditProfileClick}
+							onAddPlace={handleAddPlaceClick}
+							onCardClick={handleCardClick}
+							onCardLike={handleCardLike}
+							onCardDelete={handleCardDelete}
+							cards={cards}
+						/>
+						} />
+				</Routes>
+				{/* <Main
 					onEditAvatar={handleEditAvatarClick}
 					onEditProfile={handleEditProfileClick}
 					onAddPlace={handleAddPlaceClick}
@@ -120,7 +138,7 @@ function App() {
 					onCardLike={handleCardLike}
 					onCardDelete={handleCardDelete}
 					cards={cards}
-				/>
+				/> */}
 				<Footer />
 
 				<EditAvatarPopup
@@ -135,17 +153,17 @@ function App() {
 					onUpdateUser={handleUpdateUser}
 				/>
 
-				<AddPlacePopup 
+				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
 					onAddPlace={handleAddPlaceSubmit}
 				/>
 
-				<PopupWithForm
+				{/* <PopupWithForm
 					name="delete-card"
 					title="Вы уверены?">
 					<p className="popup__title">Вы уверены?</p>
-				</PopupWithForm>
+				</PopupWithForm> */}
 
 				<ImagePopup
 					card={selectedCard}
