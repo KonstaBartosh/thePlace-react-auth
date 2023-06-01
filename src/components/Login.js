@@ -1,7 +1,7 @@
 function Login() {
 	return(
 		<div className="signup">
-			<h2 className="signup__title">Вход</h2>
+			<h2 className="signup__title">Войти</h2>
 			<form className="signup__form" name="login-form">
 				<input
 					type="email"

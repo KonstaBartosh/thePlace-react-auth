@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
+/** Импортируем компоненты приложения */
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import { api } from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
@@ -22,6 +22,8 @@ function App() {
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState({});
+	
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
 	useEffect(() => {
@@ -116,6 +118,7 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header />
 				<Routes>
+					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" /> } />
 					<Route path="/sign-up" element={<Register />}/>
 					<Route path="/sign-in" element={<Login />} />
 					<Route path="/main" element={
