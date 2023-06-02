@@ -14,6 +14,7 @@ import AddPlacePopup from "./AddPlacePopup.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
 import ProtectedRoute from "./ProtectedRoute.js";
+import InfoTooltip from "./InfoTooltip.js";
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -24,7 +25,8 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState({});
 
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(true);
+	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(true);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
 	useEffect(() => {
@@ -112,12 +114,13 @@ function App() {
 		setProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
 		setIsImagePopupOpen(false);
+		setInfoTooltipOpen(false);
 	}
 
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
-				<Header />
+				<Header loggedIn={loggedIn} />
 				<Routes>
 					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" />} />
 					<Route path="/sign-up" element={<Register />} />
@@ -133,20 +136,8 @@ function App() {
 								onCardLike={handleCardLike}
 								onCardDelete={handleCardDelete}
 								cards={cards}
-							/>
-						}
+							/>}
 					/>
-					{/* <Route path="/main" element={
-							<Main
-							onEditAvatar={handleEditAvatarClick}
-							onEditProfile={handleEditProfileClick}
-							onAddPlace={handleAddPlaceClick}
-							onCardClick={handleCardClick}
-							onCardLike={handleCardLike}
-							onCardDelete={handleCardDelete}
-							cards={cards}
-						/>} 
-					/> */}
 				</Routes>
 				<Footer />
 				<EditAvatarPopup
@@ -163,6 +154,12 @@ function App() {
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
 					onAddPlace={handleAddPlaceSubmit}
+				/>
+				<InfoTooltip
+					name='infoTooltip'
+					title='Test'
+					isOpen={isInfoTooltipOpen}
+					onClose={closeAllPopups}
 				/>
 				{/* <PopupWithForm
 					name="delete-card"
