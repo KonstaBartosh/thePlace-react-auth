@@ -1,4 +1,4 @@
-function Login() {
+function Login({buttonText}) {
 	return(
 		<div className="signup">
 			<h2 className="signup__title">Войти</h2>
@@ -18,7 +18,7 @@ function Login() {
 					required
 				/>
 			</form>
-			<button className="signup__button" type="submit">Войти</button>
+			<button className="signup__button" type="submit">{buttonText}</button>
 		</div>
 	)
 }

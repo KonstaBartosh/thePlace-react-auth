@@ -26,7 +26,7 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState({});
 
 	const [loggedIn, setLoggedIn] = useState(false);
-	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(true);
+	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
 	useEffect(() => {
@@ -123,8 +123,16 @@ function App() {
 				<Header loggedIn={loggedIn} />
 				<Routes>
 					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" />} />
-					<Route path="/sign-up" element={<Register />} />
-					<Route path="/sign-in" element={<Login />} />
+					<Route path="/sign-up" element={
+						<Register
+							buttonText='Зарегестрироваться'
+						/>} 
+					/>
+					<Route path="/sign-in" element={
+						<Login 
+						buttonText='Войти'
+						/>} 
+					/>
 					<Route path="/main" element={
 							<ProtectedRoute
 								element={Main}

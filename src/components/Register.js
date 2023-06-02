@@ -1,26 +1,68 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-function Register() {
+import * as auth from '../utils/Auth.js'
+
+function Register({ buttonText }) {
+	const [formValue, setFormValue] = useState({
+    email: '',
+    password: '',
+  });
+
+	const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value
+    });
+  }
+
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		// здесь обработчик регистрации
+		auth.register(formValue.email, formValue.password)
+			.then(res => {
+				navigate('/sign-in');
+			})
+	}
+
 	return(
 		<div className="signup">
 			<h2 className="signup__title">Регистрация</h2>
-			<form className="signup__form" name="register-form">
+			<form className="signup__form" name="form__register" onSubmit={handleSubmit} >
 				<input
+					id="email"
+					name="email"
 					type="email"
+					value={formValue.email}
+					onChange={handleChange}
 					className="signup__input"
 					placeholder="Email"
 					minLength="2" maxLength="40"
 					required
 				/>
-				<input 
+				<input
+					id="password"
+					name="password"
 					type="password"
+					value={formValue.password}
+					onChange={handleChange}
 					className="signup__input"
 					placeholder="Пароль"
 					minLength="2" maxLength="40"
 					required
 				/>
+			<button 
+				className="signup__button" 
+				type="submit"
+				onSubmit={handleSubmit}
+				>{buttonText}
+			</button>
 			</form>
-			<button className="signup__button" type="submit">Зарегистрироваться</button>
 			<p className="signup__question">Уже зарегестрированы?
 				<Link to={"/sign-in"} className="signup__link"> Войти</Link>
 			</p>
