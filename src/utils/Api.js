@@ -26,8 +26,7 @@ class Api {
 				name: data.name,
 				link: data.link
 			})
-		})
-			.then(this._checkResponse)
+		}).then(this._checkResponse)
 	}
 
 	getUserDataApi() {

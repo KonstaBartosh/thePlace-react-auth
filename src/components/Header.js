@@ -6,13 +6,14 @@ function Header({ loggedIn }) {
 	const path = (locationUrl.pathname === '/sign-in') ? '/sign-in' : '/sign-up';
 	const linkTitle = (locationUrl.pathname === '/sign-in') ? 'Регистрация' : 'Войти';
 
-	console.log(locationUrl.pathname);
-
 	return (
 		<header className="header header_line">
 			<img src={logo} alt="Логотип" className="header__logo" />
 			{loggedIn ? (
-				<Link className="header__link" to="/sign-up">Заглушка</Link>
+				<div className='header__container' >
+					<p className="header__email">email</p>
+					<Link className="header__link" to="/sign-up">Выйти</Link>
+				</div>
 			) : (
 				<Link className="header__link" to={path}>{linkTitle}</Link>
 			)}

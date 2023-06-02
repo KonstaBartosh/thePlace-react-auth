@@ -26,6 +26,11 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState({});
 
 	const [loggedIn, setLoggedIn] = useState(false);
+
+	const handleLogin = () => {
+		setLoggedIn(true);
+	}
+
 	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
@@ -122,14 +127,15 @@ function App() {
 			<CurrentUserContext.Provider value={currentUser}>
 				<Header loggedIn={loggedIn} />
 				<Routes>
-					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" />} />
+					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" replace />} />
 					<Route path="/sign-up" element={
 						<Register
 							buttonText='Зарегестрироваться'
 						/>} 
 					/>
 					<Route path="/sign-in" element={
-						<Login 
+						<Login
+						handleLogin={handleLogin}
 						buttonText='Войти'
 						/>} 
 					/>

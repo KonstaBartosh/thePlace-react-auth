@@ -4,16 +4,11 @@ import { useState } from "react";
 import * as auth from '../utils/Auth.js'
 
 function Register({ buttonText }) {
-	const [formValue, setFormValue] = useState({
-    email: '',
-    password: '',
-  });
-
+	const [formValue, setFormValue] = useState({email: '', password: ''});
 	const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-
+  const handleChange = (evt) => {
+    const {name, value} = evt.target;
     setFormValue({
       ...formValue,
       [name]: value
@@ -21,9 +16,9 @@ function Register({ buttonText }) {
   }
 
 
-	function handleSubmit(e) {
-		e.preventDefault();
-		// здесь обработчик регистрации
+	function handleRegister(evt) {
+		evt.preventDefault();
+		/** здесь обработчик регистрации */
 		auth.register(formValue.email, formValue.password)
 			.then(res => {
 				navigate('/sign-in');
@@ -33,7 +28,7 @@ function Register({ buttonText }) {
 	return(
 		<div className="signup">
 			<h2 className="signup__title">Регистрация</h2>
-			<form className="signup__form" name="form__register" onSubmit={handleSubmit} >
+			<form className="signup__form" name="form__register" onSubmit={handleRegister} >
 				<input
 					id="email"
 					name="email"
@@ -59,7 +54,7 @@ function Register({ buttonText }) {
 			<button 
 				className="signup__button" 
 				type="submit"
-				onSubmit={handleSubmit}
+				onSubmit={handleRegister}
 				>{buttonText}
 			</button>
 			</form>
