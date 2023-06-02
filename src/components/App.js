@@ -25,7 +25,7 @@ function App() {
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState({});
 
-	const [loggedIn, setLoggedIn] = useState(true);
+	const [loggedIn, setLoggedIn] = useState(false);
 	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(true);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
@@ -157,9 +157,9 @@ function App() {
 				/>
 				<InfoTooltip
 					name='infoTooltip'
-					title='Test'
 					isOpen={isInfoTooltipOpen}
 					onClose={closeAllPopups}
+					loggedIn={loggedIn}
 				/>
 				{/* <PopupWithForm
 					name="delete-card"
