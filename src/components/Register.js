@@ -7,6 +7,7 @@ function Register({ buttonText }) {
 	const [formValue, setFormValue] = useState({email: '', password: ''});
 	const navigate = useNavigate();
 
+	/** Обновление стейта при вводе в инпут */
   const handleChange = (evt) => {
     const {name, value} = evt.target;
     setFormValue({
@@ -20,7 +21,7 @@ function Register({ buttonText }) {
 		evt.preventDefault();
 		/** здесь обработчик регистрации */
 		auth.register(formValue.email, formValue.password)
-			.then(res => {
+			.then(() => {
 				navigate('/sign-in');
 			})
 	}

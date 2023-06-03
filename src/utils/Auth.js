@@ -17,7 +17,6 @@ export function register(email, password) {
 		console.log('Response received from server:', res);
     return res;
   })
-  .catch((err) => console.log(err));
 };
 
 
@@ -33,7 +32,8 @@ export function authorize(email, password) {
   .then((response => response.json()))
   .then((data) => {
 		console.log('Response received from server:', data);
-    if (data.token){
+
+    if (data.token) {
       localStorage.setItem('token', data.token);
       return data;
     }

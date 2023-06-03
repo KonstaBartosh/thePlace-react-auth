@@ -26,9 +26,11 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState({});
 
 	const [loggedIn, setLoggedIn] = useState(false);
+	const [userEmail, setUserEmail] = useState({ email: 'testFromApp' });
 
-	const handleLogin = () => {
+	const handleLogin = (email) => {
 		setLoggedIn(true);
+		setUserEmail(email); /** отображение в хедере email'a */
 	}
 
 	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
@@ -125,7 +127,7 @@ function App() {
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
-				<Header loggedIn={loggedIn} />
+				<Header loggedIn={loggedIn} userEmail={userEmail} />
 				<Routes>
 					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" replace />} />
 					<Route path="/sign-up" element={

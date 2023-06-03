@@ -17,9 +17,6 @@ function Login({ handleLogin, buttonText }) {
 
 	const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (!formValue.email || !formValue.password){
-    //   return;
-    // }
     auth.authorize(formValue.email, formValue.password)
       .then((data) => {
         if(data.token) {
@@ -27,8 +24,8 @@ function Login({ handleLogin, buttonText }) {
             email: '',
             password: ''
           })
-				handleLogin();
-        navigate('/main')
+				handleLogin(formValue.email);
+        navigate('/main');
         }
       })
       .catch(err => console.log(err));
