@@ -11,7 +11,7 @@ function Header({ loggedIn, userEmail }) {
 			<img src={logo} alt="Логотип" className="header__logo" />
 			{loggedIn ? (
 				<div className='header__container' >
-					<p className="header__email">{userEmail}</p>
+					<p className="header__email">Test</p>
 					<Link className="header__link" to="/sign-up">Заглушка</Link>
 				</div>
 			) : (

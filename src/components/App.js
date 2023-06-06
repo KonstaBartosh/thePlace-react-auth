@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 /** Импортируем компоненты приложения */
 import Header from "./Header.js";
@@ -15,6 +15,7 @@ import Login from "./Login.js";
 import Register from "./Register.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip.js";
+import * as auth from '../utils/Auth.js'
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -26,11 +27,13 @@ function App() {
 	const [selectedCard, setSelectedCard] = useState({});
 
 	const [loggedIn, setLoggedIn] = useState(false);
-	const [userEmail, setUserEmail] = useState({ email: 'testFromApp' });
+	// const [userEmail, setUserEmail] = useState({ email: 'testFromApp' });
+
+	const navigate = useNavigate();
 
 	const handleLogin = (email) => {
 		setLoggedIn(true);
-		setUserEmail(email); /** отображение в хедере email'a */
+		// setUserEmail(email); /** отображение в хедере email'a */
 	}
 
 	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
@@ -45,6 +48,23 @@ function App() {
 			.catch((err) => alert(`Возникла ошибка ${err}`))
 	}, []);
 
+	useEffect(() => {
+		tokenCheck();
+	}, [])
+
+	function tokenCheck() {
+		const token = localStorage.getItem('token');
+		if(token) {
+			auth.checkToken(token)
+				.then((user) => {
+					if(user) {
+						setLoggedIn(true);
+						navigate('/main');
+					}
+				})
+				.catch(err => console.log(err));
+		}
+	}
 
 	function handleUpdateAvatar(data) {
 		api.changeUserAvatarApi(data)
@@ -127,7 +147,7 @@ function App() {
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
-				<Header loggedIn={loggedIn} userEmail={userEmail} />
+				<Header loggedIn={loggedIn} />
 				<Routes>
 					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" replace />} />
 					<Route path="/sign-up" element={
