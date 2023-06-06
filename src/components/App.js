@@ -25,18 +25,12 @@ function App() {
 	const [currentUser, setCurrentUser] = useState({});
 	const [cards, setCards] = useState([]);
 	const [selectedCard, setSelectedCard] = useState({});
-
+	const [registred, setRegister] = useState(false);
 	const [loggedIn, setLoggedIn] = useState(false);
-	// const [userEmail, setUserEmail] = useState({ email: 'testFromApp' });
-
+	const [userEmail, setUserEmail] = useState('');
+	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 	const navigate = useNavigate();
 
-	const handleLogin = (email) => {
-		setLoggedIn(true);
-		// setUserEmail(email); /** отображение в хедере email'a */
-	}
-
-	const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
 
 	/** Эффект с результатами промиса с сервера о пользователе и карточках */
 	useEffect(() => {
@@ -48,23 +42,45 @@ function App() {
 			.catch((err) => alert(`Возникла ошибка ${err}`))
 	}, []);
 
-	useEffect(() => {
-		tokenCheck();
-	}, [])
+	/** Обработчик логина */
+	function handleLogin (email) {
+		setLoggedIn(true);
+		setUserEmail(email); /** отображение в хедере email'a */
+	}
 
-	function tokenCheck() {
+	/** Обработчик логаута */
+	function handleLogOut() {
+		localStorage.removeItem('token');
+		setLoggedIn(false)
+		navigate('/sign-in');
+	}
+
+	/** Валидность токена */
+	function handleTokenCheck() {
 		const token = localStorage.getItem('token');
+
 		if(token) {
 			auth.checkToken(token)
 				.then((user) => {
 					if(user) {
+						//* Получем данные пользователя */
+						const curentUserEmail = user.data.email;
+						//* Авторизуем пользователя */
 						setLoggedIn(true);
-						navigate('/main');
+						navigate('/main', {replace: true});
+						setUserEmail(curentUserEmail);
 					}
 				})
-				.catch(err => console.log(err));
+				.catch((err) => alert(`Возникла ошибка ${err}`))
 		}
 	}
+
+
+	//* Проврека токена, есть ли он? */
+	useEffect(() => {
+		handleTokenCheck();
+	}, [])
+
 
 	function handleUpdateAvatar(data) {
 		api.changeUserAvatarApi(data)
@@ -84,6 +100,7 @@ function App() {
 			})
 			.catch((err) => alert(`Возникла ошибка ${err}`))
 	}
+
 
 	function handleAddPlaceSubmit(card) {
 		api.addCardApi(card)
@@ -147,12 +164,14 @@ function App() {
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
-				<Header loggedIn={loggedIn} />
+				<Header loggedIn={loggedIn} userEmail={userEmail} handleLogOut={handleLogOut} />
 				<Routes>
 					<Route path="/" element={loggedIn ? <Navigate to="/main" /> : <Navigate to="/sign-in" replace />} />
 					<Route path="/sign-up" element={
 						<Register
 							buttonText='Зарегестрироваться'
+							setRegister={setRegister}
+							setInfoTooltipOpen={setInfoTooltipOpen}
 						/>} 
 					/>
 					<Route path="/sign-in" element={
@@ -195,7 +214,8 @@ function App() {
 					name='infoTooltip'
 					isOpen={isInfoTooltipOpen}
 					onClose={closeAllPopups}
-					loggedIn={loggedIn}
+					// loggedIn={loggedIn}
+					registred={registred}
 				/>
 				{/* <PopupWithForm
 					name="delete-card"

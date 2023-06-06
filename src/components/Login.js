@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import * as auth from '../utils/Auth.js'
@@ -17,18 +17,22 @@ function Login({ handleLogin, buttonText }) {
 
 	const handleSubmit = (evt) => {
     evt.preventDefault();
-    auth.authorize(formValue.email, formValue.password)
+
+		const {email, password} = formValue;
+
+    auth.authorize({ email, password })
       .then((data) => {
         if(data.token) {
+					localStorage.setItem('token', data.token);
           setFormValue({
             email: '',
             password: ''
           })
-				handleLogin(formValue.email);
+				handleLogin(email);
         navigate('/main');
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => alert(`Возникла ошибка ${err}`))
   }
 
 	return (

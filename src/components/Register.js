@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import * as auth from '../utils/Auth.js'
 
-function Register({ buttonText }) {
+function Register({ buttonText, setRegister, setInfoTooltipOpen }) {
 	const [formValue, setFormValue] = useState({email: '', password: ''});
 	const navigate = useNavigate();
 
@@ -16,13 +16,21 @@ function Register({ buttonText }) {
     });
   }
 
-
+	/** Oбработчик регистрации */
 	function handleRegister(evt) {
 		evt.preventDefault();
-		/** здесь обработчик регистрации */
-		auth.register(formValue.email, formValue.password)
+
+		const { email, password} = formValue;
+
+		auth.register(email, password)
 			.then(() => {
+				setRegister(true);
+				setInfoTooltipOpen(true);
 				navigate('/sign-in');
+			})
+			.catch((err) => {
+				setInfoTooltipOpen(true)
+				console.log((`Возникла ошибка ${err}`))
 			})
 	}
 

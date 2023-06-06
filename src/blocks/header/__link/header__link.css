@@ -5,6 +5,8 @@
 	line-height: 22px;
 	cursor: pointer;
 	text-decoration: none;
+	background-color: inherit;
+	border: 0;
 }
 
 .header__link:hover {

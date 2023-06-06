@@ -1,7 +1,7 @@
 import successLogo from '../images/Registration-success.svg';
 import deniedLogo from '../images/Registration-denied.svg'
 
-function InfoTooltip({ name, isOpen, onClose, loggedIn }) {
+function InfoTooltip({ name, isOpen, onClose, registred }) {
 	const successTitle = 'Вы успешно зарегистрировались!';
 	const deniedTitle = 'Что-то пошло не так! Попробуйте ещё раз.';
 
@@ -13,7 +13,7 @@ function InfoTooltip({ name, isOpen, onClose, loggedIn }) {
 					aria-label="Закрыть"
 					type="button"
 					onClick={onClose} />
-				{loggedIn ? (
+				{registred ? (
 					<>
 						<img className="popup__image_infotooltip" src={successLogo} />
 						<p className="popup__title_infotooltip">{successTitle}</p>
