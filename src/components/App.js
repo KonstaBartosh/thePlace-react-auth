@@ -16,6 +16,7 @@ import Register from "./Register.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip.js";
 import * as auth from '../utils/Auth.js'
+import { PopupContext } from "../contexts/PopupContext.js";
 
 function App() {
 	const [isEditAvatarPopupOpen, setAvatarPopupOpen] = useState(false);
@@ -43,7 +44,7 @@ function App() {
 	}, []);
 
 	/** Обработчик логина */
-	function handleLogin (email) {
+	function handleLogin(email) {
 		setLoggedIn(true);
 		setUserEmail(email); /** отображение в хедере email'a */
 	}
@@ -59,15 +60,15 @@ function App() {
 	function handleTokenCheck() {
 		const token = localStorage.getItem('token');
 
-		if(token) {
+		if (token) {
 			auth.checkToken(token)
 				.then((user) => {
-					if(user) {
+					if (user) {
 						//* Получем данные пользователя */
 						const curentUserEmail = user.data.email;
 						//* Авторизуем пользователя */
 						setLoggedIn(true);
-						navigate('/main', {replace: true});
+						navigate('/main', { replace: true });
 						setUserEmail(curentUserEmail);
 					}
 				})
@@ -161,6 +162,16 @@ function App() {
 		setInfoTooltipOpen(false);
 	}
 
+
+	//* Закоытие попапов по клику на оверлей*/
+	function handleOverlayClick(evt) {
+		if (evt.target === evt.currentTarget) {
+			console.log('test')
+			closeAllPopups();
+		}
+	}
+
+
 	return (
 		<div className="page">
 			<CurrentUserContext.Provider value={currentUser}>
@@ -172,61 +183,65 @@ function App() {
 							buttonText='Зарегестрироваться'
 							setRegister={setRegister}
 							setInfoTooltipOpen={setInfoTooltipOpen}
-						/>} 
+						/>}
 					/>
 					<Route path="/sign-in" element={
 						<Login
-						handleLogin={handleLogin}
-						buttonText='Войти'
-						/>} 
+							handleLogin={handleLogin}
+							buttonText='Войти'
+						/>}
 					/>
 					<Route path="/main" element={
-							<ProtectedRoute
-								element={Main}
-								loggedIn={loggedIn}
-								onEditAvatar={handleEditAvatarClick}
-								onEditProfile={handleEditProfileClick}
-								onAddPlace={handleAddPlaceClick}
-								onCardClick={handleCardClick}
-								onCardLike={handleCardLike}
-								onCardDelete={handleCardDelete}
-								cards={cards}
-							/>}
+						<ProtectedRoute
+							element={Main}
+							loggedIn={loggedIn}
+							onEditAvatar={handleEditAvatarClick}
+							onEditProfile={handleEditProfileClick}
+							onAddPlace={handleAddPlaceClick}
+							onCardClick={handleCardClick}
+							onCardLike={handleCardLike}
+							onCardDelete={handleCardDelete}
+							cards={cards}
+						/>}
 					/>
 				</Routes>
 				<Footer />
-				<EditAvatarPopup
-					isOpen={isEditAvatarPopupOpen}
-					onClose={closeAllPopups}
-					onUpdateAvatar={handleUpdateAvatar}
-				/>
-				<EditProfilePopup
-					isOpen={isEditProfilePopupOpen}
-					onClose={closeAllPopups}
-					onUpdateUser={handleUpdateUser}
-				/>
-				<AddPlacePopup
-					isOpen={isAddPlacePopupOpen}
-					onClose={closeAllPopups}
-					onAddPlace={handleAddPlaceSubmit}
-				/>
+				<PopupContext.Provider value={handleOverlayClick}>
+					<EditAvatarPopup
+						isOpen={isEditAvatarPopupOpen}
+						onClose={closeAllPopups}
+						onUpdateAvatar={handleUpdateAvatar}
+					/>
+					<EditProfilePopup
+						isOpen={isEditProfilePopupOpen}
+						onClose={closeAllPopups}
+						onUpdateUser={handleUpdateUser}
+					/>
+					<AddPlacePopup
+						isOpen={isAddPlacePopupOpen}
+						onClose={closeAllPopups}
+						onAddPlace={handleAddPlaceSubmit}
+					/>
+				</PopupContext.Provider>
 				<InfoTooltip
 					name='infoTooltip'
 					isOpen={isInfoTooltipOpen}
 					onClose={closeAllPopups}
-					// loggedIn={loggedIn}
 					registred={registred}
+					handleOverlayClick={handleOverlayClick}
 				/>
+				<ImagePopup
+					card={selectedCard}
+					isOpen={isImagePopupOpen}
+					onClose={closeAllPopups}
+					handleOverlayClick={handleOverlayClick}
+				>
+				</ImagePopup>
 				{/* <PopupWithForm
 					name="delete-card"
 					title="Вы уверены?">
 					<p className="popup__title">Вы уверены?</p>
 				</PopupWithForm> */}
-				<ImagePopup
-					card={selectedCard}
-					isOpen={isImagePopupOpen}
-					onClose={closeAllPopups}>
-				</ImagePopup>
 			</CurrentUserContext.Provider>
 		</div>
 	)

@@ -1,10 +1,12 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { PopupContext } from "../contexts/PopupContext";
 
 function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 	const currentUser = useContext(CurrentUserContext);
 	const input = useRef();
+	const handleOverlayClick = useContext(PopupContext);
 
 	/** С помощью эффекта отображаем пустые поля после ввода ссылки */
 	useEffect(() => {
@@ -26,7 +28,9 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 			isOpen={isOpen}
 			onClose={onClose}
 			onSubmit={handleSubmit}
-			buttonText="Обновить">
+			buttonText="Обновить"
+			handleOverlayClick={handleOverlayClick}
+			>
 			<input
 				name="avatar"
 				id="avatar-input"
