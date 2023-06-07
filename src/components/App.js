@@ -166,7 +166,6 @@ function App() {
 	//* Закоытие попапов по клику на оверлей*/
 	function handleOverlayClick(evt) {
 		if (evt.target === evt.currentTarget) {
-			console.log('test')
 			closeAllPopups();
 		}
 	}
