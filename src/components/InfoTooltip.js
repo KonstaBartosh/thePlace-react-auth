@@ -1,10 +1,7 @@
 import successLogo from '../images/Registration-success.svg';
 import deniedLogo from '../images/Registration-denied.svg'
 
-function InfoTooltip({ name, isOpen, onClose, registred, handleOverlayClick }) {
-	const successTitle = 'Вы успешно зарегистрировались!';
-	const deniedTitle = 'Что-то пошло не так! Попробуйте ещё раз.';
-
+function InfoTooltip({ name, isOpen, onClose, registred, handleOverlayClick, successTitle, deniedTitle }) {
 	return (
 		<div className={`popup ${isOpen ? "popup_opened" : ""} popup_type_${name}`} onClick={handleOverlayClick} >
 			<div className="popup__container overlay">
