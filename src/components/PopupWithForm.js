@@ -16,7 +16,7 @@ function PopupWithForm({
 									<button 
 										className="popup__submit-button popup__submit-button_type_profile"
 										type="submit"
-									>{isLoading ? ('Test...') : (buttonText)}
+									>{isLoading ? ('Сохранение...') : (buttonText)}
 									</button>
 							</form>
 					</div>
