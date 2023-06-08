@@ -30,23 +30,20 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   /** Эффект с результатами промиса с сервера о пользователе и карточках */
   useEffect(() => {
-    Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
-      .then(([userData, cardsData]) => {
-        setCurrentUser(userData);
-        setCards(cardsData);
-      })
-      .catch((err) => alert(`Возникла ошибка ${err}`));
+    if (loggedIn) {
+      Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
+        .then(([userData, cardsData]) => {
+          setCurrentUser(userData);
+          setCards(cardsData);
+        })
+        .catch((err) => alert(`Возникла ошибка ${err}`));
+    }
   }, [loggedIn]);
-
-  /** Обработчик логина */
-  // function handleLogin(email) {
-  //   setLoggedIn(true);
-  //   setUserEmail(email); /** отображение в хедере email'a */
-  // }
 
   /** Обработчик логаута */
   function handleLogOut() {
@@ -200,6 +197,14 @@ function App() {
     }
   }
 
+  //* Отображение кнопки загрузки*/
+  function showLoader() {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -255,16 +260,22 @@ function App() {
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
+            isLoading={isLoading}
+            showLoader={showLoader}
           />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            isLoading={isLoading}
+            showLoader={showLoader}
           />
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
+            isLoading={isLoading}
+            showLoader={showLoader}
           />
         </PopupContext.Provider>
         <InfoTooltip
@@ -291,4 +302,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

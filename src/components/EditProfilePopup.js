@@ -3,7 +3,7 @@ import PopupWithForm from "./PopupWithForm.js"
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 import { PopupContext } from "../contexts/PopupContext.js";
 
-function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, showLoader }) {
 	/** Подписка на контекст */
 	const currentUser = useContext(CurrentUserContext);
 	const handleOverlayClick = useContext(PopupContext);
@@ -21,6 +21,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
+		showLoader();	
 		/** Передаём значения управляемых компонентов во внешний обработчик */
 		onUpdateUser({
 			name: name,
@@ -36,7 +37,8 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser}) {
 			onClose={onClose}
 			onSubmit={handleSubmit}
 			buttonText="Сохранить"
-			handleOverlayClick={handleOverlayClick}>
+			handleOverlayClick={handleOverlayClick}
+			isLoading={isLoading}>
 			<input
 				value={name ?? ''}
 				onChange={handleNameChange}

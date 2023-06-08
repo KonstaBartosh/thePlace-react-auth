@@ -2,9 +2,9 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../images/logo.png';
 
 function Header({ loggedIn, userEmail, handleLogOut }) {
-	const locationUrl = useLocation();
-	const path = (locationUrl.pathname === '/sign-in') ? '/sign-up' : '/sign-in';
-	const linkTitle = (locationUrl.pathname === '/sign-in') ? 'Регистрация' : 'Войти';
+	const url = useLocation();
+	const path = (url.pathname === '/sign-in') ? '/sign-up' : '/sign-in';
+	const linkTitle = (url.pathname === '/sign-in') ? 'Регистрация' : 'Войти';
 
 	return (
 		<header className="header header_line">

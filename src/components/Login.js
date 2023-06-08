@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Login({ handleLogin, buttonText }) {
+function Login({ buttonText, handleLogin }) {
   const [formValue, setFormValue] = useState({ email: "", password: "" });
 	
 	/** Обновление стейта при вводе в инпут */
@@ -16,7 +16,7 @@ function Login({ handleLogin, buttonText }) {
     evt.preventDefault();
 
     handleLogin(formValue);
-		
+
     setFormValue({
       email: "",
       password: "",

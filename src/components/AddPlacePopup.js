@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { PopupContext } from "../contexts/PopupContext";
 
-function AddPlacePopup({isOpen, onClose, onAddPlace}) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, showLoader }) {
 	const handleOverlayClick = useContext(PopupContext);
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
@@ -17,6 +17,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
+		showLoader();	
 		onAddPlace({
 			name: title,
 			link: link
@@ -31,7 +32,8 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 			onClose={onClose}
 			onSubmit={handleSubmit}
 			buttonText="Создать"
-			handleOverlayClick={handleOverlayClick}>
+			handleOverlayClick={handleOverlayClick}
+			isLoading={isLoading}>
 			<input
 				value={title ?? ''}
 				name="add__title"

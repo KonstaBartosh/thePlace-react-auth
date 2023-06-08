@@ -3,7 +3,8 @@ import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { PopupContext } from "../contexts/PopupContext";
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, showLoader }) {
 	const currentUser = useContext(CurrentUserContext);
 	const input = useRef();
 	const handleOverlayClick = useContext(PopupContext);
@@ -18,8 +19,13 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 		onUpdateAvatar({
 			avatar: input.current.value,
 		});
+		// setLoading(true);
+		// setTimeout(() => {
+    //   // По завершении запроса, установите isLoading обратно в false
+    //   setLoading(false);
+    // }, 1000);
+		showLoader();
 	}
-
 
 	return (
 		<PopupWithForm
@@ -30,6 +36,7 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
 			onSubmit={handleSubmit}
 			buttonText="Обновить"
 			handleOverlayClick={handleOverlayClick}
+			isLoading={isLoading}
 			>
 			<input
 				name="avatar"

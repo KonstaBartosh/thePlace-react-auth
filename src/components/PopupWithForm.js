@@ -1,6 +1,7 @@
 function PopupWithForm({ 
-	name, title, children, isOpen, onClose, onSubmit, buttonText, handleOverlayClick }) {
-		
+	name, title, children, isOpen, onClose, onSubmit, buttonText, handleOverlayClick, isLoading }) {
+
+
 	return(
 			<div className={`popup ${isOpen ? "popup_opened" : ""} popup_type_${name}`} onClick={handleOverlayClick} >
 					<div className="popup__container overlay">
@@ -15,7 +16,8 @@ function PopupWithForm({
 									<button 
 										className="popup__submit-button popup__submit-button_type_profile"
 										type="submit"
-									>{buttonText}</button>
+									>{isLoading ? ('Test...') : (buttonText)}
+									</button>
 							</form>
 					</div>
 			</div>
