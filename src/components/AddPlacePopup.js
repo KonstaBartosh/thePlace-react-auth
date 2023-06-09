@@ -1,9 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
-import { PopupContext } from "../contexts/PopupContext";
+import { OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, showLoader }) {
-	const handleOverlayClick = useContext(PopupContext);
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
+	const handleOverlayClick = useContext(OverlayClickContext);
+	const handleShowLoader = useContext(ShowLoaderContext);
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
 	const handleTitleChange = (evt) => setTitle(evt.target.value);
@@ -17,7 +18,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, showLoader }) {
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
-		showLoader();	
 		onAddPlace({
 			name: title,
 			link: link
@@ -33,7 +33,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, showLoader }) {
 			onSubmit={handleSubmit}
 			buttonText="Создать"
 			handleOverlayClick={handleOverlayClick}
-			isLoading={isLoading}>
+			isLoading={isLoading}
+			handleShowLoader={handleShowLoader}
+		>
 			<input
 				value={title ?? ''}
 				name="add__title"

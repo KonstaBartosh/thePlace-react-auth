@@ -1,13 +1,13 @@
 import { useContext, useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { PopupContext } from "../contexts/PopupContext";
+import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts";
 
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, showLoader }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 	const currentUser = useContext(CurrentUserContext);
 	const input = useRef();
-	const handleOverlayClick = useContext(PopupContext);
+	const handleOverlayClick = useContext(OverlayClickContext);
+	const handleShowLoader = useContext(ShowLoaderContext);
 
 	/** С помощью эффекта отображаем пустые поля после ввода ссылки */
 	useEffect(() => {
@@ -19,12 +19,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, showLoade
 		onUpdateAvatar({
 			avatar: input.current.value,
 		});
-		// setLoading(true);
-		// setTimeout(() => {
-    //   // По завершении запроса, установите isLoading обратно в false
-    //   setLoading(false);
-    // }, 1000);
-		showLoader();
 	}
 
 	return (
@@ -37,6 +31,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, showLoade
 			buttonText="Обновить"
 			handleOverlayClick={handleOverlayClick}
 			isLoading={isLoading}
+			handleShowLoader={handleShowLoader}
 			>
 			<input
 				name="avatar"

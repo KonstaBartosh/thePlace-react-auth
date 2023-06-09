@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm.js"
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import { PopupContext } from "../contexts/PopupContext.js";
+import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, showLoader }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 	/** Подписка на контекст */
 	const currentUser = useContext(CurrentUserContext);
-	const handleOverlayClick = useContext(PopupContext);
+	const handleOverlayClick = useContext(OverlayClickContext);
+	const handleShowLoader = useContext(ShowLoaderContext);
 
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
@@ -21,7 +21,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, showLoader
 
 	function handleSubmit(evt) {
 		evt.preventDefault();
-		showLoader();	
 		/** Передаём значения управляемых компонентов во внешний обработчик */
 		onUpdateUser({
 			name: name,
@@ -38,7 +37,9 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, showLoader
 			onSubmit={handleSubmit}
 			buttonText="Сохранить"
 			handleOverlayClick={handleOverlayClick}
-			isLoading={isLoading}>
+			isLoading={isLoading}
+			handleShowLoader={handleShowLoader}
+			>
 			<input
 				value={name ?? ''}
 				onChange={handleNameChange}

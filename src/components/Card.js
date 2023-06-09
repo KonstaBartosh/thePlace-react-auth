@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { CurrentUserContext } from "../contexts/Contexts.js";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 	/** Подписка на контекст */

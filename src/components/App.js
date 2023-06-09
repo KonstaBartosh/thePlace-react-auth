@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 
 /** Импортируем компоненты приложения */
 import Header from "./Header.js";
@@ -7,8 +7,7 @@ import Main from "./Main.js";
 import Footer from "./Footer.js";
 import ImagePopup from "./ImagePopup.js";
 import { api } from "../utils/Api.js";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import { PopupContext } from "../contexts/PopupContext.js";
+import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
@@ -32,6 +31,8 @@ function App() {
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+	const showFooter = location.pathname !== '/sign-in' && location.pathname !== '/sign-up';
 
   /** Эффект с результатами промиса с сервера о пользователе и карточках */
   useEffect(() => {
@@ -76,7 +77,7 @@ function App() {
           localStorage.setItem("token", data.token);
           setLoggedIn(true);
           setUserEmail(email); /** отображение в хедере email'a */
-          navigate("/main");
+          navigate("/");
         }
       })
       .catch((err) => console.log(err));
@@ -95,7 +96,7 @@ function App() {
             const curentUserEmail = user.data.email;
             //* Авторизуем пользователя */
             setLoggedIn(true);
-            navigate("/main", { replace: true });
+            navigate("/", { replace: true });
             setUserEmail(curentUserEmail);
           }
         })
@@ -214,32 +215,22 @@ function App() {
           handleLogOut={handleLogOut}
         />
         <Routes>
-          <Route
-            path="/"
-            element={
-              loggedIn ? (
-                <Navigate to="/main" />
-              ) : (
-                <Navigate to="/sign-in" replace />
-              )
+          <Route path="*" element={ //* Либой другой путь ведет: */
+              loggedIn ? (<Navigate to="/" />) : (<Navigate to="/sign-in" replace />)
             }
           />
-          <Route
-            path="/sign-up"
-            element={
+          <Route path="/sign-up" element={
               <Register
                 buttonText="Зарегестрироваться"
                 handleRegister={handleRegister}
               />
             }
           />
-          <Route
-            path="/sign-in"
-            element={<Login handleLogin={handleLogin} buttonText="Войти" />}
+          <Route path="/sign-in" element={
+              <Login handleLogin={handleLogin} buttonText="Войти" />
+            }
           />
-          <Route
-            path="/main"
-            element={
+          <Route path="/" element={
               <ProtectedRoute
                 element={Main}
                 loggedIn={loggedIn}
@@ -254,30 +245,34 @@ function App() {
             }
           />
         </Routes>
-        <Footer />
-        <PopupContext.Provider value={handleOverlayClick}>
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-            isLoading={isLoading}
-            showLoader={showLoader}
-          />
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-            isLoading={isLoading}
-            showLoader={showLoader}
-          />
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-            isLoading={isLoading}
-            showLoader={showLoader}
-          />
-        </PopupContext.Provider>
+        {showFooter && <Footer />}
+        <OverlayClickContext.Provider value={handleOverlayClick}>
+          <ShowLoaderContext.Provider value={showLoader}>
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+              isLoading={isLoading}
+            />
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+              isLoading={isLoading}
+            />
+            <AddPlacePopup
+              isOpen={isAddPlacePopupOpen}
+              onClose={closeAllPopups}
+              onAddPlace={handleAddPlaceSubmit}
+              isLoading={isLoading}
+            />
+            <ImagePopup
+              card={selectedCard}
+              isOpen={isImagePopupOpen}
+              onClose={closeAllPopups}
+            />
+          </ShowLoaderContext.Provider>
+        </OverlayClickContext.Provider>
         <InfoTooltip
           name="infoTooltip"
           successTitle="Вы успешно зарегистрировались!"
@@ -287,12 +282,6 @@ function App() {
           registred={registred}
           handleOverlayClick={handleOverlayClick}
         />
-        <ImagePopup
-          card={selectedCard}
-          isOpen={isImagePopupOpen}
-          onClose={closeAllPopups}
-          handleOverlayClick={handleOverlayClick}
-        ></ImagePopup>
         {/* <PopupWithForm
 					name="delete-card"
 					title="Вы уверены?">

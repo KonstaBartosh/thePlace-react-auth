@@ -1,4 +1,9 @@
-function ImagePopup({card, isOpen, onClose, handleOverlayClick}) {
+import { useContext } from "react";
+import { OverlayClickContext } from "../contexts/Contexts";
+
+function ImagePopup({ card, isOpen, onClose }) {
+	const handleOverlayClick = useContext(OverlayClickContext);
+
 	return(
 		<div className={`popup popup_type_image ${isOpen ? "popup_opened" : ""}`} onClick={handleOverlayClick} >
 			<figure className="popup__container-image overlay">
