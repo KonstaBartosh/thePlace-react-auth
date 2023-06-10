@@ -80,7 +80,10 @@ function App() {
           navigate("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setInfoTooltipOpen(true)
+        console.log(err);
+      });
   }
 
   /** Валидность токена */
