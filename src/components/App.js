@@ -224,13 +224,18 @@ function App() {
           />
           <Route path="/sign-up" element={
               <Register
+                title="Регистрация"
                 buttonText="Зарегестрироваться"
-                handleRegister={handleRegister}
+                handler={handleRegister}
               />
             }
           />
           <Route path="/sign-in" element={
-              <Login handleLogin={handleLogin} buttonText="Войти" />
+              <Login
+                title="Войти"
+                buttonText="Войти" 
+                handler={handleLogin} 
+              />
             }
           />
           <Route path="/" element={
