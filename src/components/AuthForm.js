@@ -47,7 +47,7 @@ function AuthForm({ title, buttonText, authHandler }) {
           className="signup__input"
         />
         <div className="form__error-message form__error-message_active">
-          {errors?.email && <p>{errors?.email?.message}</p>}
+          {errors?.email && <div>{errors?.email?.message}</div>}
         </div>
         <input
           {...register("password", {
@@ -64,7 +64,7 @@ function AuthForm({ title, buttonText, authHandler }) {
           className="signup__input"
         />
         <div className="form__error-message form__error-message_active">
-          {errors?.password && <p>{errors?.password?.message}</p>}
+          {errors?.password && <div>{errors?.password?.message}</div>}
         </div>        
         <button
           className="signup__button"

@@ -1,4 +1,4 @@
-const InputUrlHook = ( { title, register, errors }) => {
+const InputUrlHook = ( { title, register, errors, placeholder }) => {
 	return(
 		<>
 			<input
@@ -11,11 +11,11 @@ const InputUrlHook = ( { title, register, errors }) => {
 				})}
 				id={`${title}-input`}
 				type="url"
-				placeholder="Ссылка на картинку"
+				placeholder={placeholder}
 				className="popup__field form__input"
 			/>
 			<span className="form__error-message form__error-message_active">
-				{errors?.[title] && <p>{errors?.[title]?.message}</p>}
+				{errors?.[title] && <div>{errors?.[title]?.message}</div>}
 			</span>			
 		</>
 	)

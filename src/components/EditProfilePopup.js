@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";	
 
 import PopupWithForm from "./PopupWithForm.js"
 import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
-import InputTextHook from "./InputTextHook.js";
+import InputTextHook from "./hooks/InputTextHook.js"
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   /** Подписка на контекст */
@@ -13,13 +13,15 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
   const { 
     register,
-    isValid,
-    handleSubmit, 
+    handleSubmit,
+		reset,
+		isValid, 
     formState: { errors } 
   } = useForm({ mode: "onChange" });
 
   function submitData(data) {
     onUpdateUser(data);
+		reset();
   }
 	
 	return (
@@ -33,19 +35,19 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 			handleOverlayClick={handleOverlayClick}
 			isLoading={isLoading}
 			handleShowLoader={handleShowLoader}
-			isValid={isValid}
+			isValid={!isValid}
 			>
 				<InputTextHook
 					title='name'
 					register={register}
 					errors={errors}
-					placeholder={currentUser.name}
+					defaultValue={currentUser.name}
 				/>
 				<InputTextHook
 					title='about'
 					register={register}
 					errors={errors}
-					placeholder={currentUser.about}
+					defaultValue={currentUser.about}
 				/>
 		</PopupWithForm>
 	)

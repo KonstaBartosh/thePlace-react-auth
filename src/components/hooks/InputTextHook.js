@@ -1,4 +1,4 @@
-	const InputTextHook = ( { title, register, errors, placeholder }) => {
+	const InputTextHook = ( { title, register, errors, placeholder, defaultValue }) => {
 		return(
 			<>
 				<input
@@ -13,10 +13,11 @@
 					id={`${title}-input`}
 					type="text"
 					placeholder={placeholder}
+					defaultValue={defaultValue}
 					className="popup__field form__input"
 				/>
 				<span className="form__error-message form__error-message_active">
-					{errors?.[title] && <p>{errors?.[title]?.message}</p>}
+					{errors?.[title] && <div>{errors?.[title]?.message}</div>}
 				</span>			
 			</>
 		)
