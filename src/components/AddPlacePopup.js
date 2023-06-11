@@ -1,9 +1,10 @@
 import { useContext  } from "react";
 import { useForm } from "react-hook-form";
-import PopupWithForm from "./PopupWithForm";
+
 import { OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
-import InputTextHook from "./hooks/InputTextHook";
-import InputUrlHook from "./hooks/InputUrlHook";
+import PopupWithForm from "./PopupWithForm";
+import TextInput from "./inputs/TextInput";
+import UrlInput from "./inputs/UrlInput";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 	/** Подписка на контекст */
@@ -36,13 +37,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 			handleShowLoader={handleShowLoader}
 			isValid={!isValid}
 		>
-			<InputTextHook 
+			<TextInput 
 				title="name"
 				register={register}
 				errors={errors}
 				placeholder="Название"
 			/>
-			<InputUrlHook
+			<UrlInput
 				title="link"
 				register={register}
 				errors={errors}

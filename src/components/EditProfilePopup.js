@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import PopupWithForm from "./PopupWithForm.js"
 import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts.js";
-import InputTextHook from "./hooks/InputTextHook.js"
+import TextInput from "./inputs/TextInput"
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
   /** Подписка на контекст */
@@ -37,13 +37,13 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 			handleShowLoader={handleShowLoader}
 			isValid={!isValid}
 			>
-				<InputTextHook
+				<TextInput
 					title='name'
 					register={register}
 					errors={errors}
 					defaultValue={currentUser.name}
 				/>
-				<InputTextHook
+				<TextInput
 					title='about'
 					register={register}
 					errors={errors}

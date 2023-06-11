@@ -1,4 +1,4 @@
-	const InputTextHook = ( { title, register, errors, placeholder, defaultValue }) => {
+	const TextInput = ( { title, register, errors, placeholder, defaultValue }) => {
 		return(
 			<>
 				<input
@@ -23,4 +23,4 @@
 		)
 	}
 
-	export default InputTextHook;
+	export default TextInput;

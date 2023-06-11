@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
 import PopupWithForm from "./PopupWithForm";
-import InputUrlHook from "./hooks/InputUrlHook";
+import UrlInput from "./inputs/UrlInput";
 import { OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts";
 
 
@@ -37,7 +37,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 			handleShowLoader={handleShowLoader}
 			isValid={!isValid}
 			>
-			<InputUrlHook
+			<UrlInput
 				title="avatar" 
 				register={register} 
 				errors={errors}

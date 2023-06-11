@@ -1,4 +1,4 @@
-const InputUrlHook = ( { title, register, errors, placeholder }) => {
+const UrlInput = ( { title, register, errors, placeholder }) => {
 	return(
 		<>
 			<input
@@ -21,4 +21,4 @@ const InputUrlHook = ( { title, register, errors, placeholder }) => {
 	)
 }
 
-export default InputUrlHook;
+export default UrlInput;
