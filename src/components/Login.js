@@ -1,11 +1,11 @@
 import AuthForm from "./AuthForm";
 
-function Login( { title, buttonText, handler }) {
+function Login( { title, buttonText, authHandler }) {
 	return(
 		<AuthForm
 			title={title}
-			buttonText={title}
-			handler={handler}
+			buttonText={buttonText}
+			authHandler={authHandler}
 		/>
 	)
 }

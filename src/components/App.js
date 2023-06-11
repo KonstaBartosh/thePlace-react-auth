@@ -226,7 +226,7 @@ function App() {
               <Register
                 title="Регистрация"
                 buttonText="Зарегестрироваться"
-                handler={handleRegister}
+                authHandler={handleRegister}
               />
             }
           />
@@ -234,7 +234,7 @@ function App() {
               <Login
                 title="Войти"
                 buttonText="Войти" 
-                handler={handleLogin} 
+                authHandler={handleLogin} 
               />
             }
           />

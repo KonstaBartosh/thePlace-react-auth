@@ -1,24 +1,27 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+
 import PopupWithForm from "./PopupWithForm";
-import { CurrentUserContext, OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts";
+import InputUrlHook from "./InputUrlHook";
+import { OverlayClickContext, ShowLoaderContext } from "../contexts/Contexts";
 
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
-	const currentUser = useContext(CurrentUserContext);
-	const input = useRef();
+	/** Подписка на контекст */
 	const handleOverlayClick = useContext(OverlayClickContext);
 	const handleShowLoader = useContext(ShowLoaderContext);
 
-	/** С помощью эффекта отображаем пустые поля после ввода ссылки */
-	useEffect(() => {
-		input.current.value = ''
-	}, [currentUser])
+	const { 
+		register,
+		reset,
+		isValid, 
+		handleSubmit, 
+		formState: { errors } 
+	} = useForm({ mode: "onChange" });
 
-	function handleSubmit(evt) {
-		evt.preventDefault();
-		onUpdateAvatar({
-			avatar: input.current.value,
-		});
+	function submitData(data) {
+		onUpdateAvatar(data);
+		reset();
 	}
 
 	return (
@@ -27,22 +30,18 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 			title="Обновить аватар"
 			isOpen={isOpen}
 			onClose={onClose}
-			onSubmit={handleSubmit}
+			onSubmit={handleSubmit(submitData)}
 			buttonText="Обновить"
 			handleOverlayClick={handleOverlayClick}
 			isLoading={isLoading}
 			handleShowLoader={handleShowLoader}
+			isValid={!isValid}
 			>
-			<input
-				name="avatar"
-				id="avatar-input"
-				type="url"
-				className="popup__field form__input"
-				placeholder="Ссылка на картинку"
-				ref={input}
-				required
+			<InputUrlHook
+				title="avatar" 
+				register={register} 
+				errors={errors} 
 			/>
-			<span className="avatar-input-error form__error-message"></span>
 		</PopupWithForm>
 	)
 }

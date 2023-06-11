@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import AuthForm from "./AuthForm";
 
-function Register({ title, buttonText, handler }) {
+function Register({ title, buttonText, authHandler }) {
   return(
     <>
       <AuthForm
         title={title}
         buttonText={buttonText}
-        handler={handler}
+        authHandler={authHandler}
       />
       <p className="signup__question">
         Уже зарегестрированы? 

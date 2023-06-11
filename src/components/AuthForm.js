@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-function AuthForm({ title, buttonText, handler }) {
+function AuthForm({ title, buttonText, authHandler }) {
   const requiredMessage = "Заполните это поле.";
   const minLengthMessage = "Минимум 3 символа";
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
@@ -10,13 +10,15 @@ function AuthForm({ title, buttonText, handler }) {
 
   const {
     register, 
-    handleSubmit, 
+    resetField,
+    handleSubmit, //* handleSubmit получет данные из инпутов и отвечает за их отправку */
     formState: { errors, isValid } 
   } = useForm({ mode: "onChange" });
 
   //* Отправка данных на сервер */
   const submitData = (data) => {
-    handler(data);
+    authHandler(data);
+    resetField();
   };
 
   return (
@@ -67,12 +69,11 @@ function AuthForm({ title, buttonText, handler }) {
         <button
           className="signup__button"
           type="submit"
-          disabled={ !isValid }
+          disabled={!isValid}
         >
           {buttonText}
         </button>
       </form>
-      
     </div>
   );
 }

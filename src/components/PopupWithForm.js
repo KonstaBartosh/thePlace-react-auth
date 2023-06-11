@@ -11,6 +11,7 @@ function PopupWithForm({
 	buttonText, 
 	handleOverlayClick, 
 	isLoading,
+	isValid
 	}) {
 
 	const handleShowLoader = useContext(ShowLoaderContext);
@@ -34,6 +35,7 @@ function PopupWithForm({
 										className="popup__submit-button popup__submit-button_type_profile"
 										type="submit"
 										onClick={handleShowLoader}
+										disabled={!isValid}
 									>
 									{isLoading ? ('Сохранение...') : (buttonText)}
 									</button>
