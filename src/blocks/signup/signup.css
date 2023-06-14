@@ -8,3 +8,10 @@
 	justify-content: center;
 	align-items: center;
 }
+
+@media screen and (max-width: 540px) {
+	.signup {
+			max-width: 282px;
+			padding: 40px 30px 20px;
+	}
+}
