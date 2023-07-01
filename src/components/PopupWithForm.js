@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ShowLoaderContext } from "../contexts/Contexts";
 
 function PopupWithForm({ 
@@ -14,6 +14,18 @@ function PopupWithForm({
 	}) {
 
 	const handleShowLoader = useContext(ShowLoaderContext);
+
+		//** closing popups by escape */
+	useEffect(() => {
+		if (!isOpen) return;
+		function handleEscapeClose (evt) {
+			if (evt.key === 'Escape') {
+				onClose();
+			}
+		};
+		document.addEventListener('keydown', handleEscapeClose);
+		return () => document.removeEventListener('keydown', handleEscapeClose);
+	}, [isOpen, onClose]);
 	
 	return(
 			<div 
