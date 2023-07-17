@@ -30,6 +30,7 @@ function App() {
   const [userEmail, setUserEmail] = useState("");
   const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 	const showFooter = location.pathname !== '/sign-in' && location.pathname !== '/sign-up';
@@ -50,8 +51,13 @@ function App() {
   function handleLogOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    setMenuOpen(!menuOpen);
     navigate("/sign-in");
   }
+
+  const toggleBurgerMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   /** Регистрация */
   function handleRegister({ email, password }) {
@@ -80,7 +86,10 @@ function App() {
           navigate("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setInfoTooltipOpen(true)
+        console.log(err);
+      });
   }
 
   /** Валидность токена */
@@ -213,6 +222,8 @@ function App() {
           loggedIn={loggedIn}
           userEmail={userEmail}
           handleLogOut={handleLogOut}
+          toggleMenu={toggleBurgerMenu}
+          menuOpen={menuOpen}
         />
         <Routes>
           <Route path="*" element={ //* Либой другой путь ведет: */
@@ -221,13 +232,18 @@ function App() {
           />
           <Route path="/sign-up" element={
               <Register
+                title="Регистрация"
                 buttonText="Зарегестрироваться"
-                handleRegister={handleRegister}
+                authHandler={handleRegister}
               />
             }
           />
           <Route path="/sign-in" element={
-              <Login handleLogin={handleLogin} buttonText="Войти" />
+              <Login
+                title="Войти"
+                buttonText="Войти" 
+                authHandler={handleLogin} 
+              />
             }
           />
           <Route path="/" element={

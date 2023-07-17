@@ -8,7 +8,7 @@
     'subtitle subtitle';
 }
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 625px) {
     .profile__info {
         justify-content: center;
         padding: 0;

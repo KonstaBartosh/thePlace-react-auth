@@ -7,6 +7,7 @@
 - редактирование аватара
 - постановка и снятие лайков карточкам
 - удаление карточек
+- кастомная валидация данных
 
 [ДЕМОВЕРСИЯ С АВТОРИЗАЦИЕЙ](https://konstabartosh.github.io/mesto-react-auth)
 
@@ -15,15 +16,14 @@
 - JAVASCRIPT
 - REACT
 - JSX
-- REACT HOOKS
+- REACT HOOK FORMS
 - REACT CONTEXT
 - REACT ROUTER DOM
 - REST Api
 
 ### Дальнейшие планы по доработке
 
-- Подключить валидацию
-- Добавить isLoading
+- Добавить отображение isLoading для UX
 - Добавить англоязычную версию
 
 ### Запуск и сборка проекта
