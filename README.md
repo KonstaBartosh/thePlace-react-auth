@@ -31,4 +31,8 @@
 Для запуска потребуется установленный Node.js. 
 - `npm start` для работы с проектом в режиме разработчика
 - `npm run build` для финальной сборки
-- `npm run deploy` деплой для Gh Pages
+- `npm run server` запуск билд версии на
+
+Для деплоя проекта в интернете
+- установить "homepage" в package.json
+- `npm run deploy` деплой на Gh Pages
