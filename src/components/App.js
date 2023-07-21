@@ -102,7 +102,7 @@ function App() {
         .then((user) => {
           if (user) {
             //* Получем данные пользователя */
-            const curentUserEmail = user.email;
+            const curentUserEmail = user.data.email;
             //* Авторизуем пользователя */
             setLoggedIn(true);
             navigate("/", { replace: true });
