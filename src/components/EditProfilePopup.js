@@ -38,7 +38,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 			isValid={!isValid}
 			>
 				<TextInput
-					title='name'
+					title='title'
 					register={register}
 					errors={errors}
 					defaultValue={currentUser.name}
