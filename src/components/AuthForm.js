@@ -45,6 +45,7 @@ function AuthForm({ title, buttonText, authHandler }) {
           type="email"
           placeholder="Email"
           className="signup__input"
+          autoComplete="on"
         />
         <div className="form__error-message form__error-message_active">
           {errors?.email && <div>{errors?.email?.message}</div>}
@@ -62,6 +63,7 @@ function AuthForm({ title, buttonText, authHandler }) {
           type="password"
           placeholder="Пароль"
           className="signup__input"
+          autoComplete="on"
         />
         <div className="form__error-message form__error-message_active">
           {errors?.password && <div>{errors?.password?.message}</div>}

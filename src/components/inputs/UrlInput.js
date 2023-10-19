@@ -13,6 +13,7 @@ const UrlInput = ( { title, register, errors, placeholder }) => {
 				type="url"
 				placeholder={placeholder}
 				className="popup__field form__input"
+				autoComplete="off"
 			/>
 			<span className="form__error-message form__error-message_active">
 				{errors?.[title] && <div>{errors?.[title]?.message}</div>}
