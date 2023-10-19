@@ -115,7 +115,7 @@ function App() {
 
   //* Проврека токена, есть ли он? */
   useEffect(() => {
-    handleTokenCheck();
+    loggedIn && handleTokenCheck();
   }, []);
 
   function handleUpdateAvatar(data) {
