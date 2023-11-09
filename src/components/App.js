@@ -231,7 +231,6 @@ return (
       <Routes>
         <Route path="/" element={
           <Main
-            loggedIn={loggedIn}
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
