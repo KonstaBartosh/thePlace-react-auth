@@ -1,5 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import logo from "../images/logo.png";
 
 function Header({ loggedIn, userEmail, handleLogOut, toggleMenu, menuOpen }) {
   const url = useLocation();
@@ -17,7 +16,7 @@ function Header({ loggedIn, userEmail, handleLogOut, toggleMenu, menuOpen }) {
         </div>
       )}
       <header className="header header_line">
-        <img src={logo} alt="Логотип" className="header__logo" />
+        <h1 className="header__logo">The Place</h1>
         {loggedIn && (
           <>
             <div className="burger-menu" onClick={toggleMenu}>
