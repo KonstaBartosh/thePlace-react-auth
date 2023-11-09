@@ -1,6 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Header({ loggedIn, userEmail, handleLogOut, toggleMenu, menuOpen }) {
+  const navigate = useNavigate();
   const url = useLocation();
   const path = url.pathname === "/sign-in" ? "/sign-up" : "/sign-in";
   const linkTitle = url.pathname === "/sign-in" ? "Регистрация" : "Войти";
@@ -16,7 +17,7 @@ function Header({ loggedIn, userEmail, handleLogOut, toggleMenu, menuOpen }) {
         </div>
       )}
       <header className="header header_line">
-        <h1 className="header__logo">The Place</h1>
+        <h1 className="header__logo" onClick={() => navigate('/')}>The Place</h1>
         {loggedIn && (
           <>
             <div className="burger-menu" onClick={toggleMenu}>

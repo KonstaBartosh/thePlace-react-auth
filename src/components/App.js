@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 /** Импортируем компоненты приложения */
 import Header from "./Header.js";
@@ -13,7 +13,6 @@ import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import Login from "./Login.js";
 import Register from "./Register.js";
-import ProtectedRoute from "./ProtectedRoute.js";
 import InfoTooltip from "./InfoTooltip.js";
 import * as auth from "../utils/Auth.js";
 
@@ -37,14 +36,12 @@ const showFooter = location.pathname !== '/sign-in' && location.pathname !== '/s
 
 /** Эффект с результатами промиса с сервера о пользователе и карточках */
 useEffect(() => {
-  if (loggedIn) {
-    Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
-      .then(([userData, cardsData]) => {
-        setCurrentUser(userData);
-        setCards(cardsData);
-      })
-      .catch((err) => alert(`Возникла ошибка ${err}`));
-  }
+  Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
+    .then(([userData, cardsData]) => {
+      setCurrentUser(userData);
+      setCards(cardsData);
+    })
+    .catch((err) => alert(`Возникла ошибка ${err}`));
 }, [loggedIn]);
 
   //* Проврека токена, есть ли он? */
@@ -57,7 +54,7 @@ function handleLogOut() {
   localStorage.removeItem("token");
   setLoggedIn(false);
   setMenuOpen(!menuOpen);
-  navigate("/sign-in");
+  navigate("/");
 }
 
 const toggleBurgerMenu = () => {
@@ -226,9 +223,19 @@ return (
         menuOpen={menuOpen}
       />
       <Routes>
-        <Route path="*" element={ //* Либой другой путь ведет: */
-            loggedIn ? (<Navigate to="/" />) : (<Navigate to="/sign-in" replace />)
-          }
+        <Route path="/" element={
+          <Main
+            loggedIn={loggedIn}
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+            cards={cards}
+          />
+        }
+        
         />
         <Route path="/sign-up" element={
             <Register
@@ -243,20 +250,6 @@ return (
               title="Войти"
               buttonText="Войти" 
               authHandler={handleLogin} 
-            />
-          }
-        />
-        <Route path="/" element={
-            <ProtectedRoute
-              element={Main}
-              loggedIn={loggedIn}
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
-              cards={cards}
             />
           }
         />
