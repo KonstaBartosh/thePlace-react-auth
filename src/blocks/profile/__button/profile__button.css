@@ -9,7 +9,7 @@
     padding: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
     .profile__button {
         background-image: url(../../../images/Add\ ButtonBig.svg);
         width: 282px;
