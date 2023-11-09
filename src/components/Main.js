@@ -11,11 +11,14 @@ function Main({
   onCardLike,
   onCardDelete,
   cards,
+  isLoading
 }) {
   const currentUser = useContext(CurrentUserContext); /** Подписка на контекст */
 
   return (
-    <main className="main">
+    isLoading ? 
+    <p style={{color: 'white', textAlign: 'center', padding: '100px 0', fontSize: '20px'}}>Loading...</p>
+    : (<main className="main">
       <section className="profile">
         <div className="profile__container">
           <div className="profile__avatar-container">
@@ -54,7 +57,7 @@ function Main({
           />
         ))}
       </section>
-    </main>
+    </main>)
   );
 }
 

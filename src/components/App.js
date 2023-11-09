@@ -36,13 +36,19 @@ const showFooter = location.pathname !== '/sign-in' && location.pathname !== '/s
 
 /** Эффект с результатами промиса с сервера о пользователе и карточках */
 useEffect(() => {
+  setLoading(true); // Устанавливаем isLoading в true перед началом загрузки
+
   Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
     .then(([userData, cardsData]) => {
       setCurrentUser(userData);
       setCards(cardsData);
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => alert(`Возникла ошибка ${err}`))
+    .finally(() => {
+      setLoading(false);
+    });
 }, [loggedIn]);
+
 
   //* Проврека токена, есть ли он? */
   useEffect(() => {
@@ -233,6 +239,7 @@ return (
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
             cards={cards}
+            isLoading={isLoading}
           />
         }
         
@@ -254,7 +261,7 @@ return (
           }
         />
       </Routes>
-      {showFooter && <Footer />}
+      {showFooter && <Footer isLoading={isLoading}/>}
       <OverlayClickContext.Provider value={handleOverlayClick}>
         <ShowLoaderContext.Provider value={showLoader}>
           <EditAvatarPopup
