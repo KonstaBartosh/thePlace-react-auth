@@ -56,7 +56,7 @@ useEffect(() => {
 
   //* Проврека токена, есть ли он? */
   useEffect(() => {
-    handleTokenCheck();
+    if(loggedIn) {handleTokenCheck()}
   }, []);
 
 /** Обработчик логаута */
