@@ -41,13 +41,13 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 					title='title'
 					register={register}
 					errors={errors}
-					defaultValue={currentUser.name}
+					defaultValue={currentUser.name || 'Jacques Cousteau'}
 				/>
 				<TextInput
 					title='about'
 					register={register}
 					errors={errors}
-					defaultValue={currentUser.about}
+					defaultValue={currentUser.about || 'Sailor, researcher, diver'}
 				/>
 		</PopupWithForm>
 	)
