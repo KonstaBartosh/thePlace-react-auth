@@ -43,10 +43,8 @@ useEffect(() => {
       setCurrentUser(userData);
       setCards(cardsData);
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`))
-    .finally(() => {
-      setLoading(false);
-    });
+    .catch((err) => console.error(`Возникла ошибка ${err}`))
+    .finally(() => setLoading(false))
 }, [loggedIn]);
 
 
@@ -117,7 +115,7 @@ function handleTokenCheck() {
           setUserEmail(curentUserEmail);
         }
       })
-      .catch((err) => alert(`Возникла ошибка ${err}`));
+      .catch((err) => console.error(`Возникла ошибка ${err}`));
   }
 }
 
@@ -128,7 +126,7 @@ function handleUpdateAvatar(data) {
       setCurrentUser(userData);
       closeAllPopups();
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => console.error(`Возникла ошибка ${err}`));
 }
 
 function handleUpdateUser(data) {
@@ -138,7 +136,7 @@ function handleUpdateUser(data) {
       setCurrentUser(userData);
       closeAllPopups();
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => console.error(`Возникла ошибка ${err}`));
 }
 
 function handleAddPlaceSubmit(card) {
@@ -148,7 +146,7 @@ function handleAddPlaceSubmit(card) {
       setCards([newCard, ...cards]);
       closeAllPopups();
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => console.error(`Возникла ошибка ${err}`));
 }
 
 function handleCardLike(card) {
@@ -164,7 +162,7 @@ function handleCardLike(card) {
         cards.map((item) => (item._id === card._id ? newCard : item))
       );
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => console.error(`Возникла ошибка ${err}`));
 }
 
 function handleCardDelete(card) {
@@ -173,7 +171,7 @@ function handleCardDelete(card) {
     .then(() => {
       setCards((cards) => cards.filter((item) => item._id !== card._id));
     })
-    .catch((err) => alert(`Возникла ошибка ${err}`));
+    .catch((err) => console.error(`Возникла ошибка ${err}`));
 }
 
 function handleCardClick(card) {
