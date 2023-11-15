@@ -28,25 +28,31 @@ const [registred, setRegister] = useState(false);
 const [loggedIn, setLoggedIn] = useState(false);
 const [userEmail, setUserEmail] = useState("");
 const [isInfoTooltipOpen, setInfoTooltipOpen] = useState(false);
-const [isLoading, setLoading] = useState(false);
+const [isLoading, setLoading] = useState(true);
 const [menuOpen, setMenuOpen] = useState(false);
 const navigate = useNavigate();
 const location = useLocation();
 const showFooter = location.pathname !== '/sign-in' && location.pathname !== '/sign-up';
 
+const handleError = (err) => {
+  console.error(`Возникла ошибка ${err}`)
+}
+
 /** Эффект с результатами промиса с сервера о пользователе и карточках */
 useEffect(() => {
-  setLoading(true); // Устанавливаем isLoading в true перед началом загрузки
-
-  Promise.all([api.getUserDataApi(), api.getInitialCardsApi()])
-    .then(([userData, cardsData]) => {
-      setCurrentUser(userData);
-      setCards(cardsData);
-    })
-    .catch((err) => console.error(`Возникла ошибка ${err}`))
+  api.getInitialCardsApi()
+    .then((cards) => setCards(cards))
+    .catch(err => handleError(err))
     .finally(() => setLoading(false))
-}, [loggedIn]);
+}, [])
 
+useEffect(() => {
+  if (loggedIn) {
+    api.getUserDataApi()
+      .then((userData) => setCurrentUser(userData))
+      .catch(err => handleError(err))
+  }
+}, [loggedIn])
 
   //* Проврека токена, есть ли он? */
   useEffect(() => {
@@ -115,7 +121,7 @@ function handleTokenCheck() {
           setUserEmail(curentUserEmail);
         }
       })
-      .catch((err) => console.error(`Возникла ошибка ${err}`));
+      .catch(err => handleError(err));
   }
 }
 
@@ -126,7 +132,7 @@ function handleUpdateAvatar(data) {
       setCurrentUser(userData);
       closeAllPopups();
     })
-    .catch((err) => console.error(`Возникла ошибка ${err}`));
+    .catch(err => handleError(err));
 }
 
 function handleUpdateUser(data) {
@@ -136,7 +142,7 @@ function handleUpdateUser(data) {
       setCurrentUser(userData);
       closeAllPopups();
     })
-    .catch((err) => console.error(`Возникла ошибка ${err}`));
+    .catch(err => handleError(err));
 }
 
 function handleAddPlaceSubmit(card) {
@@ -146,7 +152,7 @@ function handleAddPlaceSubmit(card) {
       setCards([newCard, ...cards]);
       closeAllPopups();
     })
-    .catch((err) => console.error(`Возникла ошибка ${err}`));
+    .catch(err => handleError(err));
 }
 
 function handleCardLike(card) {
@@ -162,7 +168,7 @@ function handleCardLike(card) {
         cards.map((item) => (item._id === card._id ? newCard : item))
       );
     })
-    .catch((err) => console.error(`Возникла ошибка ${err}`));
+    .catch(err => handleError(err));
 }
 
 function handleCardDelete(card) {
@@ -171,7 +177,7 @@ function handleCardDelete(card) {
     .then(() => {
       setCards((cards) => cards.filter((item) => item._id !== card._id));
     })
-    .catch((err) => console.error(`Возникла ошибка ${err}`));
+    .catch(err => handleError(err));
 }
 
 function handleCardClick(card) {

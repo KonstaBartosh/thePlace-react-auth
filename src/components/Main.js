@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/Contexts.js";
 
 import Card from "./Card.js";
+import defaultUserPic from '../images/custou.jpeg';
 
 function Main({
   onEditProfile,
@@ -23,14 +24,14 @@ function Main({
         <div className="profile__container">
           <div className="profile__avatar-container">
             <div
-              style={{ backgroundImage: `url(${currentUser.avatar})` }}
+              style={{ backgroundImage: `url(${currentUser.avatar || defaultUserPic})` }}
               className="profile__avatar"
               onClick={onEditAvatar}
             ></div>
           </div>
           <div className="profile__info">
-            <h1 className="profile__info-title">{currentUser.name}</h1>
-            <p className="profile__info-subtitle">{currentUser.about}</p>
+            <h1 className="profile__info-title">{currentUser.name || 'Jacques Cousteau'}</h1>
+            <p className="profile__info-subtitle">{currentUser.about || 'Sailor, researcher, diver'}</p>
             <button
               className="profile__edit-button"
               type="button"
