@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/thePlace-react-auth/static/css/main.6f5cb8dd.css",
-    "main.js": "/thePlace-react-auth/static/js/main.5a17651a.js",
+    "main.js": "/thePlace-react-auth/static/js/main.1a87c58e.js",
     "static/media/Inter-Bold.woff?v=3.19": "/thePlace-react-auth/static/media/Inter-Bold.93c1301bd9f486c573b3.woff",
     "static/media/Inter-Black.woff?v=3.19": "/thePlace-react-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
     "static/media/Inter-Regular.woff?v=3.19": "/thePlace-react-auth/static/media/Inter-Regular.8c206db99195777c6769.woff",
@@ -21,10 +21,10 @@
     "static/media/pencil-button.svg": "/thePlace-react-auth/static/media/pencil-button.a086f758840ae814ecde.svg",
     "static/media/close-icon.svg": "/thePlace-react-auth/static/media/close-icon.2ceb783afbab75916ddc.svg",
     "main.6f5cb8dd.css.map": "/thePlace-react-auth/static/css/main.6f5cb8dd.css.map",
-    "main.5a17651a.js.map": "/thePlace-react-auth/static/js/main.5a17651a.js.map"
+    "main.1a87c58e.js.map": "/thePlace-react-auth/static/js/main.1a87c58e.js.map"
   },
   "entrypoints": [
     "static/css/main.6f5cb8dd.css",
-    "static/js/main.5a17651a.js"
+    "static/js/main.1a87c58e.js"
   ]
 }
